@@ -1,0 +1,8 @@
+BEGIN;
+
+DROP TABLE IF EXISTS dbo.user_additional_data;
+DROP TABLE IF EXISTS dbo.wallet;
+
+DROP SCHEMA IF EXISTS dbo;
+
+COMMIT;

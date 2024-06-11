@@ -1,0 +1,47 @@
+name: users-management
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    env_file:
+      - .env
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # RabbitMQ Management UI
+    volumes:
+      - ./rabbitmq_data:/var/lib/rabbitmq
+
+  users-management:
+    image: postgres:15.4-bullseye
+    restart: always
+    container_name: users-management
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - postgres
+
+  users-management-db-manager:
+    image: dpage/pgadmin4
+    user: '$UID:$GID'
+    env_file:
+      - .env
+    ports:
+      - "15433:80"
+    volumes:
+      - ./pgadmin-data/:/var/lib/pgadmin/
+    networks:
+      - postgres
+    depends_on:
+      - users-management
+
+volumes:
+  rabbitmq_data:
+  postgres:
+
+networks:
+  postgres:
