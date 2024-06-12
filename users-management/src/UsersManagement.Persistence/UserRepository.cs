@@ -1,13 +1,20 @@
 ﻿using Mapster;
 using MassTransit;
 using Microsoft.Extensions.Options;
+using UsersManagement.Domain.Exceptions;
+using UsersManagement.Domain.Factories;
 using UsersManagement.Domain.Repositories;
 using UsersManagement.Persistence.Models;
 using UsersManagement.Persistence.Events;
+using Role = UsersManagement.Domain.Role;
 
 namespace UsersManagement.Persistence;
 
-internal sealed class UserRepository(IOptionsMonitor<UserSettings> options, UsersManagementContext context, IPublishEndpoint publishEndpoint) : IUserRepository
+internal sealed class UserRepository(
+    IOptionsMonitor<UserSettings> options,
+    UsersManagementContext context,
+    IPublishEndpoint publishEndpoint,
+    IUserFactory userFactory) : IUserRepository
 {
     public async Task<bool> TryCreateUserAsync(Domain.User user, CancellationToken cancellationToken = default)
     {
@@ -28,13 +35,27 @@ internal sealed class UserRepository(IOptionsMonitor<UserSettings> options, User
         return true;
     }
 
-    public async Task<(bool, Domain.User?)> TryGetUserAsync(Domain.Address userId, CancellationToken cancellationToken = default)
+    public async Task<(bool, Domain.User?)> TryGetUserAsync(Domain.Address userId,
+        CancellationToken cancellationToken = default)
     {
         var wallet = await context.Users.FindAsync([userId.ToString()], cancellationToken: cancellationToken);
 
-        return wallet is null
-            ? (false, default)
-            : (true, wallet.Adapt<Domain.User>());
+        if (wallet is null or { IsActive: false } or { IsDeleted: true })
+        {
+            return (false, default);
+        }
+
+        var role = (Role)wallet.Role;
+
+        var userWithoutRole = wallet.Adapt<Domain.UserWithoutRole>();
+        var user = role switch
+        {
+            Role.Admin => userFactory.CreateAdminUser(userWithoutRole),
+            Role.User => userFactory.CreateUser(userWithoutRole),
+            _ => throw new UserRoleNotFoundException(),
+        };
+
+        return (true, user);
     }
 
     public async Task<bool> UpdateUserAsync(Domain.PartialUser user, CancellationToken cancellationToken = default)
@@ -49,7 +70,7 @@ internal sealed class UserRepository(IOptionsMonitor<UserSettings> options, User
         wallet.Language = user.Language is null ? wallet.Language : user.Language.Value.ToString().ToLowerInvariant();
 
         await context.SaveChangesAsync(cancellationToken);
-        
+
         return true;
     }
 
@@ -64,9 +85,10 @@ internal sealed class UserRepository(IOptionsMonitor<UserSettings> options, User
 
         wallet.IsDeleted = true;
         wallet.DeleteDeadline = DateTime.UtcNow.AddDays(options.CurrentValue.Delete.GracePeriodInDays);
-        
-        await publishEndpoint.Publish(new UserMarkedAsDeletedEvent(wallet.Wallet, wallet.DeleteDeadline.Value), cancellationToken);
-        
+
+        await publishEndpoint.Publish(new UserMarkedAsDeletedEvent(wallet.Wallet, wallet.DeleteDeadline.Value),
+            cancellationToken);
+
         await context.SaveChangesAsync(cancellationToken);
         return true;
     }

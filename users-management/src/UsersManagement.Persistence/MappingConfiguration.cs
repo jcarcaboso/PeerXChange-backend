@@ -8,8 +8,7 @@ public class MappingConfiguration : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<Domain.User, User>()
-            .Map(dst => dst.Wallet, src => src.Wallet)
-            .Map(dst => dst.Language, src => src.Language.ToString().ToLowerInvariant());
+        // config.NewConfig<User, Domain.UserWithoutRole>()
+        //     .Map(dst => dst.Wallet, src => src.Wallet);
     }
 }

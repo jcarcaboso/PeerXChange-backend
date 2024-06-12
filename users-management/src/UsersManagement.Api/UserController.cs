@@ -16,7 +16,7 @@ public class UserController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetUser(
-        [FromQuery] Address wallet,
+        [FromQuery] string wallet,
         CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new GetUserQuery(wallet), cancellationToken);
@@ -24,7 +24,7 @@ public class UserController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost]
+    [HttpPut]
     public async Task<IActionResult> CreateUser(
         [FromQuery] string wallet,
         [FromQuery] Language language,
