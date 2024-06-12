@@ -1,20 +1,18 @@
 using Mapster;
 using MediatR;
+using ErrorOr;
 using UsersManagement.Domain.Repositories;
 
 namespace UsersManagement.Application.GetUser;
 
-public sealed class GetUserQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUserQuery, GetUserQueryResponse>
+public sealed class GetUserQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUserQuery, ErrorOr<GetUserQueryResponse>>
 {
-    public async Task<GetUserQueryResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<GetUserQueryResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        var (exist, user) = await userRepository.TryGetUserAsync(request.Wallet, cancellationToken);
-
-        if (!exist)
-        {
-            throw new Exception();
-        }
-
-        return user.Adapt<GetUserQueryResponse>();
+        var result = await userRepository.TryGetUserAsync(request.Wallet, cancellationToken);
+        
+        return result.Match<ErrorOr<GetUserQueryResponse>>(
+            user => user.Adapt<GetUserQueryResponse>(), 
+            err => err);
     }
 }

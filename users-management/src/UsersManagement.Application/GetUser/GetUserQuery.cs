@@ -1,9 +1,10 @@
+using ErrorOr;
 using MediatR;
 using UsersManagement.Domain;
 
 namespace UsersManagement.Application.GetUser;
 
-public sealed record GetUserQuery(Address Wallet) : IRequest<GetUserQueryResponse>;
+public sealed record GetUserQuery(Address Wallet) : IRequest<ErrorOr<GetUserQueryResponse>>;
 
 
 public sealed record GetUserQueryResponse

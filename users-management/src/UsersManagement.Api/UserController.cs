@@ -1,3 +1,4 @@
+using ErrorOr;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,21 +8,47 @@ using UsersManagement.Application.CreateUser;
 using UsersManagement.Application.DeleteUser;
 using UsersManagement.Application.GetUser;
 using UsersManagement.Application.UpdateUser;
-using UsersManagement.Domain;
 
 namespace UsersManagement.Api;
 
 [ApiController, Route("api/[controller]")]
 public class UserController(IMediator mediator) : ControllerBase
 {
+    private IActionResult MapErrorResponse(IEnumerable<Error> errors)
+    {
+        var error = errors.First();
+        
+        return error.Type switch
+        {
+            ErrorType.NotFound => NotFound(MapError(error)),
+            // ErrorType.Failure => expr,
+            // ErrorType.Unexpected => expr,
+            ErrorType.Validation => BadRequest(MapError(error)),
+            // ErrorType.Conflict => expr,
+            ErrorType.Unauthorized => Unauthorized(MapError(error)),
+            // ErrorType.Forbidden => Forbid(MapError(error)),
+            _ => throw new Exception(),
+        };
+    }
+    
+    private object MapError(Error error)
+    {
+        return new
+        {
+            Code = error.Code,
+            Description = error.Description,
+            Metadata = error.Metadata
+        };
+    }
+    
     [HttpGet]
     public async Task<IActionResult> GetUser(
         [FromQuery] string wallet,
         CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new GetUserQuery(wallet), cancellationToken);
-        
-        return Ok(response);
+
+        return response.IsError ? MapErrorResponse(response.Errors) : Ok(response);
     }
 
     [HttpPut]
