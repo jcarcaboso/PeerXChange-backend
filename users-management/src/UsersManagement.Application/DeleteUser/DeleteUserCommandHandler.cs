@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using UsersManagement.Domain.Repositories;
+using UsersManagement.Infrastructure.Repositories;
 
 namespace UsersManagement.Application.DeleteUser;
 

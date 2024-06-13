@@ -1,6 +1,7 @@
 using ErrorOr;
+using UsersManagement.Domain;
 
-namespace UsersManagement.Domain.Repositories;
+namespace UsersManagement.Infrastructure.Repositories;
 
 public interface IUserRepository
 {

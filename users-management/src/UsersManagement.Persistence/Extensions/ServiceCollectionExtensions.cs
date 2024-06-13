@@ -4,7 +4,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UsersManagement.Domain.Repositories;
+using UsersManagement.Infrastructure.Repositories;
 using UsersManagement.Persistence.Models;
 
 namespace UsersManagement.Persistence.Extensions;

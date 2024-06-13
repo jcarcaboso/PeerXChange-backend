@@ -13,9 +13,10 @@
         <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
         <PackageReference Include="MassTransit" Version="8.2.2" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
+        <PackageReference Include="ErrorOr" Version="2.0.1"/>
     </ItemGroup>
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\UsersManagement.Persistence\UsersManagement.Persistence.csproj" />
+        <ProjectReference Include="..\UsersManagement.Domain\UsersManagement.Domain.csproj" />
     </ItemGroup>
 </Project>

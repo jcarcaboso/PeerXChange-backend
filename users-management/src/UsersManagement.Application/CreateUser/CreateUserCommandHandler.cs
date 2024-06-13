@@ -3,7 +3,7 @@ using Mapster;
 using MediatR;
 using UsersManagement.Domain;
 using UsersManagement.Domain.Factories;
-using UsersManagement.Domain.Repositories;
+using UsersManagement.Infrastructure.Repositories;
 
 namespace UsersManagement.Application.CreateUser;
 

@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ErrorOr" Version="2.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\PeerXChange.Common\PeerXChange.Common.csproj" />
     </ItemGroup>
 </Project>

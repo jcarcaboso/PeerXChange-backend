@@ -1,7 +1,7 @@
 using Mapster;
 using MediatR;
 using ErrorOr;
-using UsersManagement.Domain.Repositories;
+using UsersManagement.Infrastructure.Repositories;
 
 namespace UsersManagement.Application.GetUser;
 

@@ -11,6 +11,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\UsersManagement.Infrastructure\UsersManagement.Infrastructure.csproj" />
+        <ProjectReference Include="..\UsersManagement.Persistence\UsersManagement.Persistence.csproj"/>
     </ItemGroup>
 </Project>

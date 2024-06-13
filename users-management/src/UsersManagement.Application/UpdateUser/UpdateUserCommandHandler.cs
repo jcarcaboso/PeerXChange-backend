@@ -2,7 +2,7 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using UsersManagement.Domain;
-using UsersManagement.Domain.Repositories;
+using UsersManagement.Infrastructure.Repositories;
 
 namespace UsersManagement.Application.UpdateUser;
 

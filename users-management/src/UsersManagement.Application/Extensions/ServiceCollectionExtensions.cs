@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UsersManagement.Domain.Factories;
 using UsersManagement.Infrastructure.Extensions;
+using UsersManagement.Persistence.Extensions;
 
 namespace UsersManagement.Application.Extensions;
 
@@ -15,7 +16,8 @@ public static class ServiceCollectionExtensions
     {
         services
             .AddDomain()
-            .AddInfrastructure(configuration);
+            .AddInfrastructure(configuration)
+            .AddPersistence(configuration);
         
         services.AddMappings();
         services.AddMediator();
