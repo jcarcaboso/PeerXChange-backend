@@ -1,3 +1,4 @@
+using System.Net;
 using ErrorOr;
 using Mapster;
 using MediatR;
@@ -12,46 +13,21 @@ using UsersManagement.Application.UpdateUser;
 namespace UsersManagement.Api;
 
 [ApiController, Route("api/[controller]")]
-public class UserController(IMediator mediator) : ControllerBase
+public class UserController(IMediator mediator) : ErrorOrBaseController
 {
-    private IActionResult MapErrorResponse(IEnumerable<Error> errors)
-    {
-        var error = errors.First();
-        
-        return error.Type switch
-        {
-            ErrorType.NotFound => NotFound(MapError(error)),
-            // ErrorType.Failure => expr,
-            // ErrorType.Unexpected => expr,
-            ErrorType.Validation => BadRequest(MapError(error)),
-            // ErrorType.Conflict => expr,
-            ErrorType.Unauthorized => Unauthorized(MapError(error)),
-            // ErrorType.Forbidden => Forbid(MapError(error)),
-            _ => throw new Exception(),
-        };
-    }
-    
-    private object MapError(Error error)
-    {
-        return new
-        {
-            Code = error.Code,
-            Description = error.Description,
-            Metadata = error.Metadata
-        };
-    }
-    
     [HttpGet]
+    [ProducesResponseType(typeof(GetUserQueryResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetUser(
         [FromQuery] string wallet,
         CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new GetUserQuery(wallet), cancellationToken);
 
-        return response.IsError ? MapErrorResponse(response.Errors) : Ok(response);
+        return MapErrorOrOkResponse(response);
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateUser(
         [FromQuery] string wallet,
         [FromQuery] Language language,
@@ -59,12 +35,13 @@ public class UserController(IMediator mediator) : ControllerBase
     {
         var command = new CreateUserCommand() { Wallet = wallet, Language = language };
 
-        await mediator.Send(command, cancellationToken);
+        var response = await mediator.Send(command, cancellationToken);
 
-        return NoContent();
+        return MapErrorOrResponse(response, Created());
     }
 
     [HttpPatch("{userId:required}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateUser(
         string userId,
         [FromBody] UpdateUserRequest request,
@@ -73,16 +50,17 @@ public class UserController(IMediator mediator) : ControllerBase
     {
         var command = request.Adapt<UpdateUserCommand>() with { Wallet = userId };
         
-        await mediator.Send(command, cancellationToken);
+        var response = await mediator.Send(command, cancellationToken);
         
-        return NoContent();
+        return MapErrorOrResponse(response, NoContent());
     }
 
     [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteUser([FromQuery] string userId, CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new DeleteUserCommand(userId), cancellationToken);
         
-        return NoContent();
+        return MapErrorOrResponse(response, NoContent());
     }
 }
