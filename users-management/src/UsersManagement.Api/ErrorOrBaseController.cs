@@ -24,7 +24,7 @@ public class ErrorOrBaseController : ControllerBase
             // ErrorType.Failure => expr,
             // ErrorType.Unexpected => expr,
             ErrorType.Validation => BadRequest(MapError(error)),
-            // ErrorType.Conflict => expr,
+            ErrorType.Conflict => Conflict(MapError(error)),
             ErrorType.Unauthorized => Unauthorized(MapError(error)),
             // ErrorType.Forbidden => Forbid(MapError(error)),
             _ => throw new Exception(),
