@@ -27,5 +27,6 @@
     
     <ItemGroup>
         <ProjectReference Include="..\..\src\UsersManagement.Api\UsersManagement.Api.csproj" />
+        <ProjectReference Include="..\..\tools\DatabaseMigrations\DatabaseMigrations.csproj" />
     </ItemGroup>
 </Project>

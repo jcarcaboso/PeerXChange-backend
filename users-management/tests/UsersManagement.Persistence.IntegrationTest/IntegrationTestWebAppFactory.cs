@@ -1,3 +1,4 @@
+using DatabaseMigrations.MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ namespace UsersManagement.Persistence.IntegrationTest;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    public readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
+    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres:15.4-bullseye")
         .WithDatabase("postgresql")
         .WithUsername("test")
@@ -31,6 +32,8 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
             services.Remove(services.Single(srv =>
                 typeof(DbContextOptions<UsersManagementContext>) == srv.ServiceType));
             services.AddDbContext<UsersManagementContext>(opt => 
+                opt.UseNpgsql(_dbContainer.GetConnectionString()));
+            services.AddDbContext<MassTransitContext>(opt => 
                 opt.UseNpgsql(_dbContainer.GetConnectionString()));
         });
     }
