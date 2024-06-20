@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ErrorOr;
+using Mapster;
 
 namespace UsersManagement.Api;
 
@@ -10,6 +11,9 @@ public class ErrorOrBaseController : ControllerBase
     
     protected IActionResult MapErrorOrOkResponse<T>(ErrorOr<T> response) => 
         response.Match(v => Ok(v), MapErrorResponse);
+    
+    protected IActionResult MapErrorOrOkResponse<T, U>(ErrorOr<T> response) => 
+        response.Match(v => Ok(v.Adapt<U>()), MapErrorResponse);
     
     protected IActionResult MapErrorOrResponse<T>(ErrorOr<T> response, Func<T, IActionResult> success) => 
         response.Match(success, MapErrorResponse);

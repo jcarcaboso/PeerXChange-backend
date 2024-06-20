@@ -23,7 +23,7 @@ public class UserController(IMediator mediator) : ErrorOrBaseController
     {
         var response = await mediator.Send(new GetUserQuery(wallet), cancellationToken);
 
-        return MapErrorOrOkResponse(response);
+        return MapErrorOrOkResponse<GetUserQueryResponse, GetUserResponse>(response);
     }
 
     [HttpPut]
