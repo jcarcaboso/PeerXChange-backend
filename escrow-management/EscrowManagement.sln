@@ -3,6 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8E6B472A-D627-435E-847C-6A63AF855FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscrowManagement.Api", "src\EscrowManagement.Api\EscrowManagement.Api.csproj", "{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscrowManagement.App", "src\EscrowManagement.App\EscrowManagement.App.csproj", "{A80D98C3-AE58-432D-AB93-ED328D4227EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscrowManagement.Domain", "src\EscrowManagement.Domain\EscrowManagement.Domain.csproj", "{047AB8EF-86A1-49F0-8784-DE551006974D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscrowManagement.Infrastructure", "src\EscrowManagement.Infrastructure\EscrowManagement.Infrastructure.csproj", "{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscrowManagement.Persistence", "src\EscrowManagement.Persistence\EscrowManagement.Persistence.csproj", "{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +22,34 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A80D98C3-AE58-432D-AB93-ED328D4227EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A80D98C3-AE58-432D-AB93-ED328D4227EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A80D98C3-AE58-432D-AB93-ED328D4227EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A80D98C3-AE58-432D-AB93-ED328D4227EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047AB8EF-86A1-49F0-8784-DE551006974D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047AB8EF-86A1-49F0-8784-DE551006974D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047AB8EF-86A1-49F0-8784-DE551006974D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047AB8EF-86A1-49F0-8784-DE551006974D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{235B3EF7-42B1-47C1-BAB6-5CBDC56A77BB} = {8E6B472A-D627-435E-847C-6A63AF855FC1}
+		{A80D98C3-AE58-432D-AB93-ED328D4227EB} = {8E6B472A-D627-435E-847C-6A63AF855FC1}
+		{047AB8EF-86A1-49F0-8784-DE551006974D} = {8E6B472A-D627-435E-847C-6A63AF855FC1}
+		{E3B003BD-1848-4BC4-BCBA-3C74FCD552C7} = {8E6B472A-D627-435E-847C-6A63AF855FC1}
+		{D523CE1D-A9B9-4B60-98CA-6AE2A7C31890} = {8E6B472A-D627-435E-847C-6A63AF855FC1}
 	EndGlobalSection
 EndGlobal
