@@ -5,20 +5,25 @@ public static class OfferEndpoints
     public static void AddOfferEndpoints(this WebApplication webApp)
     {
         webApp.MapGroup("offer")
-            .MapCreateOffer();
+            .MapCreateOffer()
+            .MapGetOffer();
     }
 
-    private static RouteHandlerBuilder MapCreateOffer(this RouteGroupBuilder builder)
+    private static RouteGroupBuilder MapCreateOffer(this RouteGroupBuilder builder)
     {
-        return builder
-            .MapPut("", () => { })
+        builder
+            .MapPut("", () => { return Results.Created(); })
             .WithOpenApi();
+
+        return builder;
     }
 
-    private static RouteHandlerBuilder MapGetOffer(this RouteGroupBuilder builder)
+    private static RouteGroupBuilder MapGetOffer(this RouteGroupBuilder builder)
     {
-        return builder
-            .MapGet("", () => { })
+        builder
+            .MapGet("", () => { return Results.Ok(); })
             .WithOpenApi();
+        
+        return builder;
     }
 }
