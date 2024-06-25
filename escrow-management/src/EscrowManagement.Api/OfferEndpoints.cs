@@ -10,6 +10,15 @@ public static class OfferEndpoints
 
     private static RouteHandlerBuilder MapCreateOffer(this RouteGroupBuilder builder)
     {
-        return builder.MapPut("", () => {});
+        return builder
+            .MapPut("", () => { })
+            .WithOpenApi();
+    }
+
+    private static RouteHandlerBuilder MapGetOffer(this RouteGroupBuilder builder)
+    {
+        return builder
+            .MapGet("", () => { })
+            .WithOpenApi();
     }
 }

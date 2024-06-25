@@ -1,4 +1,5 @@
-/users-management/Infraestructure/pgadmin-data/
+/**/pgadmin-data/
 
 /**/bin
 /**/obj
+/**/.vscode/
