@@ -1,6 +1,7 @@
-﻿namespace EscrowMangement.Domain;
+﻿namespace EscrowManagement.Domain;
 
-public class Class1
+public record Offer
 {
-
+    public Guid Id { get; set; }
+    
 }
