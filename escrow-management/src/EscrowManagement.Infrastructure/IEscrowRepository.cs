@@ -1,6 +1,6 @@
 ﻿namespace EscrowMangement.Infrastructure;
 
-public class Class1
+public class IEscrowRepository
 {
 
 }

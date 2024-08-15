@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageReference Include="Npgsql" Version="8.0.3" />
+        <PackageReference Include="dbup-postgresql" Version="5.0.40" />
+        <PackageReference Include="dbup-core" Version="5.0.87" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource
+                Include="scripts\**\*.sql"
+                CopyToOutputDirectory="Always"
+                CopyToPublishDirectory="Never"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="appsettings.json" CopyToOutputDirectory="Always"/>
+        <None Include="appsettings.*.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Never"/>
+    </ItemGroup>
+
+</Project>
