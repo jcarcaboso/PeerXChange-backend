@@ -10,7 +10,7 @@ CREATE TABLE
         symbol TEXT NOT NULL,
         img TEXT,
         is_testnet BOOLEAN DEFAULT FALSE,
-        creation_timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+        creation TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE
     );
 
@@ -20,7 +20,7 @@ CREATE TABLE
         name TEXT NOT NULL,
         symbol VARCHAR(10) NOT NULL,
         img TEXT,
-        creation_timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+        creation TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE
     );
 
@@ -40,7 +40,7 @@ CREATE TABLE
         name TEXT NOT NULL,
         description TEXT,
         img TEXT,
-        creation_timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+        creation TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE
     );
 
@@ -48,7 +48,7 @@ CREATE TABLE
     data.payment (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
         name TEXT NOT NULL,
-        creation_timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+        creation TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE
     );
 

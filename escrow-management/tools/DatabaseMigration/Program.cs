@@ -1,23 +1,30 @@
-var builder = WebApplication.CreateBuilder(args);
+using DatabaseMigrations;
+// using DatabaseMigrations.MassTransit;
+var builder = Host.CreateApplicationBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// builder.Services.AddDbContext<MassTransitContext>(opt => 
+//     opt.UseNpgsql(builder.Configuration.GetConnectionString("Sql")));
 
-var app = builder.Build();
+builder.Services.AddSingleton<MigrationService>(_ =>
+    new MigrationService(builder.Configuration.GetConnectionString("Sql")!));
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+using var host = builder.Build();
+
+var migrationService = host.Services.GetRequiredService<MigrationService>();
+
+Console.WriteLine("Running migrations...");
+var isSuccess = migrationService.ExecuteMigrations();
+
+if (!isSuccess)
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("Failure!");
+}
+else
+{
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("Success!");
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.Run();
+Console.ResetColor();
+Console.WriteLine("Migrations finished!");
